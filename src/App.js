@@ -13,6 +13,7 @@ import Home from './components/Home';
 import Candidate from './components/Candidate';
 import Constituency from './components/Constituency';
 import Party from './components/Party';
+import Candidates from './components/Candidates';
 
 const theme = createTheme();
 
@@ -28,8 +29,8 @@ export default function App() {
           <Route exact path='/home' element={<PrivateRoute />}>
             <Route exact path="/home" element={<Home />} />
           </Route>
-          <Route exact path='/candidate' element={<PrivateRoute />}>
-            <Route exact path="/candidate" element={<Candidate />} />
+          <Route exact path='/candidates' element={<PrivateRoute />}>
+            <Route exact path="/candidates" element={<Candidates />} />
           </Route>
           <Route exact path='/party' element={<PrivateRoute />}>
             <Route exact path="/party" element={<Party />} />

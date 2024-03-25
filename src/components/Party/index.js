@@ -100,7 +100,7 @@ const Party = () => {
                <br /><br />
                <Grid item xs={12} md={12} style={{ textAlign: 'center' }}>
                   <Button style={{ width: '80%' }} variant="contained" onClick={onClickAdd}>
-                     Add Crop
+                     Add Party
                   </Button>
                </Grid>
             </Grid>

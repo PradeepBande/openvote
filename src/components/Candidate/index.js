@@ -1,35 +1,31 @@
 import React, { useEffect, useState } from 'react'
-import { axiosPost } from '../../helpers/Axios';
-import { Button, Grid, TextField, Typography } from '@mui/material';
+import { axiosGet, axiosPost } from '../../helpers/Axios';
+import { Button, Grid, InputLabel, MenuItem, OutlinedInput, Select, TextField, Typography } from '@mui/material';
 import Header from '../Header';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { DropzoneArea } from "material-ui-dropzone";
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs from 'dayjs'
 
 const Candidate = () => {
-   const [crop_name, setCropName] = useState('')
-   const [crop_image, setCropImage] = useState(null)
-   const [files, setFiles] = useState([]);
-   const [crop_date, setCropDate] = useState(dayjs())
-
-   useEffect(() => {
-      console.log("Crop_Image--", crop_image)
-   }, [crop_image])
+   const [candidate_name, setCandidateName] = useState('')
+   const [candidate_info, setCandidateInfo] = useState('')
+   const [candidate_image, setCandidateImage] = useState([])
+   const [parties, setParties] = useState([])
+   const [party, setParty] = useState('Select Party')
+   const [city, setCity] = useState('')
+   const [state, setState] = useState('')
+   const [district, setDistrict] = useState('')
 
    const onClickAdd = () => {
       let formData = new FormData()
-      formData.append('crop_name', crop_name)
-      formData.append('crop_date', crop_date)
-      formData.append('crop_image_file', crop_image[0])
-      if (files && files.length > 0) {
-         for (let i = 0; i < files.length; i++)
-            formData.append('crop_other_image_files', files[i])
-      }
+      formData.append('candidate_name', candidate_name)
+      formData.append('candidate_info', candidate_info)
+      formData.append('candidate_image', candidate_image[0])
+      formData.append('party', party)
+      formData.append('city', city)
+      formData.append('district', district)
+      formData.append('state', state)
 
-      axiosPost('api/crops/add', formData)
+      axiosPost('api/candidates/add', formData)
          .then((res) => {
             console.log("Response--", res)
          })
@@ -37,6 +33,19 @@ const Candidate = () => {
             console.log("Error --", error)
          })
    }
+
+   useEffect(() => {
+      axiosGet('api/party/get')
+         .then((response) => {
+            const { parties } = response
+            if (parties)
+               setParties(parties)
+            console.log("Response")
+         })
+         .catch((error) => {
+            console.log("Error --", error)
+         })
+   }, [])
 
    return (
       <>
@@ -48,35 +57,92 @@ const Candidate = () => {
             }}
          >
             <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
-               <h1>Add Crop</h1>
+               <h1>Add Candidate</h1>
             </Grid>
-            {/* <Grid item xs={12} md={12} style={{ textAlign: 'center' }}>
-               <LocalizationProvider dateAdapter={AdapterDayjs} style={{ width: '100%' }}>
-                  <DatePicker
-                     fullWidth
-                     format="DD-MM-YYYY"
-                     id="date"
-                     label="Crop Date"
-                     name="date"
-                     value={crop_date}
-                     onChange={(e) => setCropDate(e)}
-                     style={{ width: '100%' }}
-                  />
-               </LocalizationProvider>
-            </Grid> */}
             <br />
             <Grid item xs={12} md={12} style={{ padding: 10, maxWidth: '600px' }}>
                <Grid item xs={12} md={12}>
                   <TextField margin="normal"
                      required fullWidth
-                     id="crop_name" label="Crop Name"
-                     name="crop_name" autoFocus
-                     value={crop_name}
-                     onChange={(e) => setCropName(e.target.value)}
+                     id="candidate_name" label="Candidate Name"
+                     name="candidate_name" autoFocus
+                     value={candidate_name}
+                     onChange={(e) => setCandidateName(e.target.value)}
                   />
                </Grid>
                <br />
 
+               <Grid item xs={12} md={12}>
+                  {/* <InputLabel id="demo-multiple-name-label">Name</InputLabel> */}
+                  <Select
+                     // labelId="demo-multiple-name-label"
+                     id="party"
+                     value={party}
+                     fullWidth
+                     onChange={(e) => setParty(e.target.value)}
+                     style={{ display: 'flex', alignItems: 'center' }}
+                  // input={<OutlinedInput label="Select Party" />}
+                  >
+
+                     {
+                        parties.map((p) => <MenuItem key={p._id} value={p._id}>
+                           <img src={process.env.REACT_APP_SERVER_URL + 'api/images/' + p.party_logo}
+                              alt={p.party_name} width="30" height="30" /> &nbsp;&nbsp;
+                           {p.party_name}
+                        </MenuItem>)
+                     }
+
+                  </Select>
+               </Grid>
+               <br />
+
+               <Grid item xs={12} md={12}>
+                  <TextField margin="normal"
+                     required fullWidth
+                     id="candidate_info" label="Candidate Info"
+                     name="candidate_info" autoFocus
+                     value={candidate_info}
+                     onChange={(e) => setCandidateInfo(e.target.value)}
+                     multiline
+                     rows={3}
+                  />
+               </Grid>
+               <br />
+
+               <Grid container item xs={12} spacing={2}>
+                  <Grid item xs={12} md={6}>
+                     <TextField margin="normal"
+                        required fullWidth
+                        id="city" label="City"
+                        name="city" autoFocus
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                     />
+                  </Grid>
+                  <br />
+                  <Grid item xs={12} md={6}>
+                     <TextField margin="normal"
+                        required fullWidth
+                        id="district" label="District"
+                        name="district" autoFocus
+                        value={district}
+                        onChange={(e) => setDistrict(e.target.value)}
+                     />
+                  </Grid>
+                  <br />
+                  <Grid item xs={12} md={6}>
+                     <TextField margin="normal"
+                        required fullWidth
+                        id="state" label="State"
+                        name="state" autoFocus
+                        value={state}
+                        onChange={(e) => setState(e.target.value)}
+                     />
+                  </Grid>
+                  <br />
+               </Grid>
+
+               <br />
                <Grid item xs={12} md={12}>
                   <Typography variant="h6"
                      style={{
@@ -85,12 +151,12 @@ const Candidate = () => {
                         justifyContent: 'center'
                      }}
                   >
-                     Crop Main Image
+                     Candidate Image
                      {/* <span style={{ fontSize: 12, color: 'red' }}>&nbsp;&nbsp;(can upload only one image)</span> */}
                   </Typography>
                   <DropzoneArea
                      Icon={CloudUploadIcon}
-                     fileObjects={crop_image}
+                     fileObjects={candidate_image}
                      showFileNames
                      id="file-upload"
                      dropzoneText="Drag 'n' Drop File Here Or"
@@ -108,14 +174,14 @@ const Candidate = () => {
                      useChipsForPreview
                      previewGridProps={{ container: { spacing: 1, direction: "row" } }}
                      previewText="Selected files"
-                     onChange={(files) => setCropImage(files)}
+                     onChange={(files) => setCandidateImage(files)}
                      acceptedFiles={[".bmp", ".png", ".jpg", ".jpeg"]}
                   />
                </Grid>
                <br /><br />
                <Grid item xs={12} md={12} style={{ textAlign: 'center' }}>
                   <Button style={{ width: '80%' }} variant="contained" onClick={onClickAdd}>
-                     Add Crop
+                     Add Candidate
                   </Button>
                </Grid>
             </Grid>
