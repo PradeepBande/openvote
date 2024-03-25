@@ -19,16 +19,16 @@ const pagesLink = ['/home', '/add-crop']
 const settings = ['Profile', 'Logout'];
 
 function Header() {
-  const [farmer, setFarmer] = useState(null)
+  const [admin, setAdmin] = useState(null)
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const navigate = useNavigate()
 
   useEffect(() => {
-    let farmer = localStorage.getItem('farmer')
-    if (farmer) {
-      farmer = JSON.parse(farmer)
-      setFarmer(farmer)
+    let admin = localStorage.getItem('admin')
+    if (admin) {
+      admin = JSON.parse(admin)
+      setAdmin(admin)
     }
   }, [])
   const handleOpenNavMenu = (event) => {
@@ -157,7 +157,7 @@ function Header() {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, border: '5px solid green' }}>
-                  <Avatar alt={farmer?.name} src="/static/images/avatar/2.jpg" />
+                  <Avatar alt={admin?.name} src="/static/images/avatar/2.jpg" />
                 </IconButton>
               </Tooltip>
               <Menu

@@ -26,12 +26,13 @@ export default function Register(props) {
       else if (password !== confirm_password) {
          alert("Password mismatch. Please, confirm password")
       } else {
-         axiosPost('api/users/register', { name, email, password, address, phone, city })
+         axiosPost('api/admins/register', { name, email, password, address, phone, city })
             .then((res) => {
                if (res?.code === 'success') {
-                  const { token, farmer } = res
+
+                  const { token, admin } = res
                   localStorage.setItem('token', token)
-                  localStorage.setItem('farmer', JSON.stringify(farmer))
+                  localStorage.setItem('admin', JSON.stringify(admin))
                   navigate('/home')
                }
             })

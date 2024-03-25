@@ -15,12 +15,12 @@ export default function LogIn(props) {
       const email = data.get('email')
       const password = data.get('password')
 
-      axiosPost('api/users/signin', { email, password })
+      axiosPost('api/admins/signin', { email, password })
          .then((res) => {
             if (res?.code === 'success') {
-               const { token, farmer } = res
+               const { token, admin } = res
                localStorage.setItem('token', token)
-               localStorage.setItem('farmer', JSON.stringify(farmer))
+               localStorage.setItem('admin', JSON.stringify(admin))
                navigate('/home')
             }
          })
