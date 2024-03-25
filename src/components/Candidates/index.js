@@ -49,8 +49,9 @@ const Candidates = () => {
                      <TableHead>
                         <TableRow>
                            <TableCell />
-                           <TableCell align="center" style={{ fontWeight: 'bold' }}>Image</TableCell>
-                           <TableCell align="center" style={{ fontWeight: 'bold' }}>Name</TableCell>
+                           <TableCell align="center" style={{ fontWeight: 'bold' }}>Candidate Image</TableCell>
+                           <TableCell align="center" style={{ fontWeight: 'bold' }}>Candidate Name</TableCell>
+                           <TableCell align="center" style={{ fontWeight: 'bold' }}>Party Name</TableCell>
                            <TableCell align="center" style={{ fontWeight: 'bold' }}>City</TableCell>
                            <TableCell align="center" style={{ fontWeight: 'bold' }}>District</TableCell>
                            <TableCell align="center" style={{ fontWeight: 'bold' }}>State</TableCell>

@@ -34,7 +34,7 @@ const Row = (props) => {
 
     return (
         <React.Fragment>
-            <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+            <TableRow sx={{ '& > *': { borderBottom: 'unset' } }} style={{ fontSize: 20 }}>
                 <TableCell>
                     <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
@@ -44,11 +44,41 @@ const Row = (props) => {
                     <img src={process.env.REACT_APP_SERVER_URL + 'api/images/' + row?.candidate_image}
                         alt={"Crop_Image"} width="100" height="100" />
                 </TableCell>
-                <TableCell align="center">{row?.candidate_name}</TableCell>
-                <TableCell align="center">{row?.city}</TableCell>
-                <TableCell align="center">{row?.district}</TableCell>
-                <TableCell align="center">{row?.state}</TableCell>
-                <TableCell align="center">{moment(row?.created_at).format('hh:mm:ss a')}</TableCell>
+                <TableCell align="center">
+                    <Typography style={{ fontSize: 20 }}>
+                        {row?.candidate_name}
+                    </Typography>
+                </TableCell>
+                <TableCell align="center">
+                    <Grid style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <img src={process.env.REACT_APP_SERVER_URL + 'api/images/' + row?.party?.party_logo}
+                            alt={"party image"} width="40" height="40" />
+                        &nbsp;&nbsp;
+                        <Typography style={{ fontSize: 20 }}>
+                            {row?.party?.party_name}
+                        </Typography>
+                    </Grid>
+                </TableCell>
+                <TableCell align="center">
+                    <Typography style={{ fontSize: 20 }}>
+                        {row?.city}
+                    </Typography>
+                </TableCell>
+                <TableCell align="center">
+                    <Typography style={{ fontSize: 20 }}>
+                        {row?.district}
+                    </Typography>
+                </TableCell>
+                <TableCell align="center">
+                    <Typography style={{ fontSize: 20 }}>
+                        {row?.state}
+                    </Typography>
+                </TableCell>
+                <TableCell align="center">
+                    <Typography style={{ fontSize: 20 }}>
+                        {moment(row?.created_at).format('hh:mm:ss a')}
+                    </Typography>
+                </TableCell>
                 <TableCell align="center">
                     <Grid>
                         {/* <Tooltip title="Generate QR Code">
@@ -83,7 +113,7 @@ const Row = (props) => {
                             </Typography>
                             {
                                 row?.candidate_info ?
-                                    <Typography style={{padding:'10px 30px'}}>
+                                    <Typography style={{ padding: '10px 30px', fontSize: 20 }}>
                                         {row?.candidate_info}
                                     </Typography>
                                     :
