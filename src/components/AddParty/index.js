@@ -5,7 +5,7 @@ import Header from '../Header';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { DropzoneArea } from "material-ui-dropzone";
 
-const Party = () => {
+const AddParty = () => {
    const [party_name, setPartyName] = useState('')
    const [party_logo, setPartyLogo] = useState(null)
 
@@ -110,4 +110,4 @@ const Party = () => {
    )
 }
 
-export default Party
+export default AddParty

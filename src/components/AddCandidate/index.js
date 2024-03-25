@@ -5,7 +5,7 @@ import Header from '../Header';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { DropzoneArea } from "material-ui-dropzone";
 
-const Candidate = () => {
+const AddCandidate = () => {
    const [candidate_name, setCandidateName] = useState('')
    const [candidate_info, setCandidateInfo] = useState('')
    const [candidate_image, setCandidateImage] = useState([])
@@ -191,4 +191,4 @@ const Candidate = () => {
    )
 }
 
-export default Candidate
+export default AddCandidate

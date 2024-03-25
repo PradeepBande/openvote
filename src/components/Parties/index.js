@@ -5,17 +5,17 @@ import Header from '../Header';
 import Row from './Row';
 import { useNavigate } from 'react-router-dom';
 
-const Candidates = () => {
-   const [candidateList, setCandidateList] = useState([])
+const Parties = () => {
+   const [partyList, setPartyList] = useState([])
    const navigate = useNavigate()
 
 
    useEffect(() => {
-      axiosGet('api/candidates/get')
+      axiosGet('api/party/get')
          .then((response) => {
-            const { candidates } = response
-            if (candidates)
-               setCandidateList(candidates)
+            const { parties } = response
+            if (parties)
+               setPartyList(parties)
             console.log("Response")
          })
          .catch((error) => {
@@ -36,30 +36,26 @@ const Candidates = () => {
                <h1>Candidates List</h1>
             </Grid>
             <br />
-            <Grid item xs={12} md={10} style={{ display: 'flex', justifyContent: 'right', paddingRight: 20 }}>
-               <Button variant="contained" color="success" onClick={() => navigate('/add-candidate')}>
-                  Add Candidate
+            <Grid item xs={12} md={8} style={{ display: 'flex', justifyContent: 'right', paddingRight: 20 }}>
+               <Button variant="contained" color="success" onClick={() => navigate('/add-party')}>
+                  Add Party
                </Button>
             </Grid>
             <br />
-            <Grid item xs={12} md={10} style={{ padding: 10 }}>
+            <Grid item xs={12} md={8} style={{ padding: 10 }}>
 
                <TableContainer component={Paper}>
                   <Table aria-label="collapsible table">
                      <TableHead>
                         <TableRow>
-                           <TableCell />
                            <TableCell align="center" style={{ fontWeight: 'bold' }}>Image</TableCell>
                            <TableCell align="center" style={{ fontWeight: 'bold' }}>Name</TableCell>
-                           <TableCell align="center" style={{ fontWeight: 'bold' }}>City</TableCell>
-                           <TableCell align="center" style={{ fontWeight: 'bold' }}>District</TableCell>
-                           <TableCell align="center" style={{ fontWeight: 'bold' }}>State</TableCell>
                            <TableCell align="center" style={{ fontWeight: 'bold' }}>Created Date</TableCell>
                            <TableCell align="center" style={{ fontWeight: 'bold' }}>Actions</TableCell>
                         </TableRow>
                      </TableHead>
                      <TableBody>
-                        {candidateList && candidateList.length > 0 && candidateList.map((row) => (
+                        {partyList && partyList.length > 0 && partyList.map((row) => (
                            <Row key={row._id} row={row} />
                         ))}
                      </TableBody>
@@ -72,4 +68,4 @@ const Candidates = () => {
    )
 }
 
-export default Candidates
+export default Parties
