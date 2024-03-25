@@ -1,20 +1,33 @@
-import './App.css';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from './components/Home';
-import Login from './components/Login';
-import Dashboard from './components/Dashboard';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-function App() {
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { CssBaseline } from '@mui/material';
+
+import PrivateRoute from './components/PrivateRoute';
+
+import Login from './components/SignIn';
+import Footer from './components/Footer';
+import PublicRoute from './components/PublicRoute';
+import Home from './components/Home';
+
+const theme = createTheme();
+
+export default function App() {
   return (
-    <BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
         <Routes>
-          {/* <Route exact path="/" component={Home} /> */}
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/admin/login" element={<Login />} />
-          <Route exact path="/admin/dashboard" element={<Dashboard />} />
+          <Route exact path='/admin/login' element={<PublicRoute />}>
+            <Route exact path="/admin/login" element={<Login />} />
+          </Route>
+          <Route exact path='/' element={<PublicRoute />}>
+            <Route exact path="/" element={<Home />} />
+          </Route>
         </Routes>
-    </BrowserRouter>
+      </Router>
+      <Footer />
+    </ThemeProvider>
   );
 }
-
-export default App;
