@@ -14,8 +14,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['Home', 'Add Crop'];
-const pagesLink = ['/home', '/add-crop']
+const pages = ['Home', 'Party', 'Candidate', 'Contituency', 'Resolution'];
+const pagesLink = ['/home', '/party', '/candidate', '/contituency','/resolution']
 const settings = ['Profile', 'Logout'];
 
 function Header() {

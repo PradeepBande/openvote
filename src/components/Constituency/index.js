@@ -9,7 +9,7 @@ import { DropzoneArea } from "material-ui-dropzone";
 // import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs'
 
-const Home = () => {
+const Constituency = () => {
    const [crop_name, setCropName] = useState('')
    const [crop_image, setCropImage] = useState(null)
    const [files, setFiles] = useState([]);
@@ -85,7 +85,7 @@ const Home = () => {
                         justifyContent: 'center'
                      }}
                   >
-                     Party Logo
+                     Crop Main Image
                      {/* <span style={{ fontSize: 12, color: 'red' }}>&nbsp;&nbsp;(can upload only one image)</span> */}
                   </Typography>
                   <DropzoneArea
@@ -125,4 +125,4 @@ const Home = () => {
    )
 }
 
-export default Home
+export default Constituency

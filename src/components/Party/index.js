@@ -1,35 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { axiosPost } from '../../helpers/Axios';
 import { Button, Grid, TextField, Typography } from '@mui/material';
 import Header from '../Header';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { DropzoneArea } from "material-ui-dropzone";
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs from 'dayjs'
 
-const Home = () => {
-   const [crop_name, setCropName] = useState('')
-   const [crop_image, setCropImage] = useState(null)
-   const [files, setFiles] = useState([]);
-   const [crop_date, setCropDate] = useState(dayjs())
-
-   useEffect(() => {
-      console.log("Crop_Image--", crop_image)
-   }, [crop_image])
+const Party = () => {
+   const [party_name, setPartyName] = useState('')
+   const [party_logo, setPartyLogo] = useState(null)
 
    const onClickAdd = () => {
       let formData = new FormData()
-      formData.append('crop_name', crop_name)
-      formData.append('crop_date', crop_date)
-      formData.append('crop_image_file', crop_image[0])
-      if (files && files.length > 0) {
-         for (let i = 0; i < files.length; i++)
-            formData.append('crop_other_image_files', files[i])
-      }
+      formData.append('party_name', party_name)
+      formData.append('party_logo', party_logo[0])
 
-      axiosPost('api/crops/add', formData)
+      axiosPost('api/party/add', formData)
          .then((res) => {
             console.log("Response--", res)
          })
@@ -48,7 +33,7 @@ const Home = () => {
             }}
          >
             <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
-               <h1>Add Crop</h1>
+               <h1>Add Party</h1>
             </Grid>
             {/* <Grid item xs={12} md={12} style={{ textAlign: 'center' }}>
                <LocalizationProvider dateAdapter={AdapterDayjs} style={{ width: '100%' }}>
@@ -69,10 +54,10 @@ const Home = () => {
                <Grid item xs={12} md={12}>
                   <TextField margin="normal"
                      required fullWidth
-                     id="crop_name" label="Crop Name"
-                     name="crop_name" autoFocus
-                     value={crop_name}
-                     onChange={(e) => setCropName(e.target.value)}
+                     id="party_name" label="Party Name"
+                     name="party_name" autoFocus
+                     value={party_name}
+                     onChange={(e) => setPartyName(e.target.value)}
                   />
                </Grid>
                <br />
@@ -85,12 +70,12 @@ const Home = () => {
                         justifyContent: 'center'
                      }}
                   >
-                     Party Logo
+                     Crop Main Image
                      {/* <span style={{ fontSize: 12, color: 'red' }}>&nbsp;&nbsp;(can upload only one image)</span> */}
                   </Typography>
                   <DropzoneArea
                      Icon={CloudUploadIcon}
-                     fileObjects={crop_image}
+                     fileObjects={party_logo}
                      showFileNames
                      id="file-upload"
                      dropzoneText="Drag 'n' Drop File Here Or"
@@ -108,7 +93,7 @@ const Home = () => {
                      useChipsForPreview
                      previewGridProps={{ container: { spacing: 1, direction: "row" } }}
                      previewText="Selected files"
-                     onChange={(files) => setCropImage(files)}
+                     onChange={(files) => setPartyLogo(files)}
                      acceptedFiles={[".bmp", ".png", ".jpg", ".jpeg"]}
                   />
                </Grid>
@@ -125,4 +110,4 @@ const Home = () => {
    )
 }
 
-export default Home
+export default Party
