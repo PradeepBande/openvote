@@ -18,25 +18,6 @@ const AddResolution = () => {
    const [state, setState] = useState('')
    const [district, setDistrict] = useState('')
 
-   const onClickAdd = () => {
-      let formData = new FormData()
-      formData.append('resolution_name', resolution_name)
-      formData.append('resolution_info', resolution_info)
-      formData.append('resolution_image', resolution_image[0])
-      formData.append('party', party)
-      formData.append('city', city)
-      formData.append('district', district)
-      formData.append('state', state)
-
-      axiosPost('api/resolutions/add', formData)
-         .then((res) => {
-            console.log("Response--", res)
-         })
-         .catch((error) => {
-            console.log("Error --", error)
-         })
-   }
-
    useEffect(() => {
       axiosGet('api/party/get')
          .then((response) => {
@@ -96,6 +77,21 @@ const AddResolution = () => {
       ids.push('')
       setSelectedCandidates([...data])
       setSelectedCandidatesIds([...ids])
+   }
+
+   const onClickAddResolution = () => {
+      let data = {
+         resolution_name, resolution_info, resolution_image,
+         candidates: selectedCandidatesIds, city, district,
+         state
+      }
+      axiosPost('api/resolutions/add',data)
+      .then((response)=>{
+         console.log("Response --", response)
+      })
+      .catch((err)=>{
+         console.log("Error --", err)
+      })
    }
 
    return (
@@ -232,7 +228,7 @@ const AddResolution = () => {
                   <br />
                </Grid>
 
-               <br />
+               {/* <br />
                <Grid item xs={12} md={12}>
                   <Typography variant="h6"
                      style={{
@@ -242,7 +238,6 @@ const AddResolution = () => {
                      }}
                   >
                      Resolution Image
-                     {/* <span style={{ fontSize: 12, color: 'red' }}>&nbsp;&nbsp;(can upload only one image)</span> */}
                   </Typography>
                   <DropzoneArea
                      Icon={CloudUploadIcon}
@@ -267,10 +262,10 @@ const AddResolution = () => {
                      onChange={(files) => setResolutionImage(files)}
                      acceptedFiles={[".bmp", ".png", ".jpg", ".jpeg"]}
                   />
-               </Grid>
+               </Grid> */}
                <br /><br />
                <Grid item xs={12} md={12} style={{ textAlign: 'center' }}>
-                  <Button style={{ width: '80%' }} variant="contained" onClick={onClickAdd}>
+                  <Button style={{ padding:'15px 30px'}} color="success" variant="contained" onClick={onClickAddResolution}>
                      Add Resolution
                   </Button>
                </Grid>
