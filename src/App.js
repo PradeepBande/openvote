@@ -16,6 +16,7 @@ import Candidates from './components/Candidates';
 import AddCandidate from './components/AddCandidate';
 import Parties from './components/Parties';
 import AddParty from './components/AddParty';
+import AddResolution from './components/AddResolution';
 
 const theme = createTheme();
 
@@ -25,10 +26,10 @@ export default function App() {
       <CssBaseline />
       <Router>
         <Routes>
-          <Route exact path='/admin/login' element={<PublicRoute />}>
+          <Route exact path='/' element={<PublicRoute />}>
             <Route exact path="/admin/login" element={<Login />} />
           </Route>
-          <Route exact path='/home' element={<PrivateRoute />}>
+          <Route exact path='/' element={<PrivateRoute />}>
             <Route exact path="/home" element={<Home />} />
           </Route>
           <Route exact path='/candidates' element={<PrivateRoute />}>
@@ -37,14 +38,17 @@ export default function App() {
           <Route exact path='/add-candidate' element={<PrivateRoute />}>
             <Route exact path="/add-candidate" element={<AddCandidate />} />
           </Route>
-          <Route exact path='/parties' element={<PrivateRoute />}>
+          <Route exact path='/' element={<PrivateRoute />}>
             <Route exact path="/parties" element={<Parties />} />
           </Route>
-          <Route exact path='/add-party' element={<PrivateRoute />}>
+          <Route exact path='/' element={<PrivateRoute />}>
             <Route exact path="/add-party" element={<AddParty />} />
           </Route>
-          <Route exact path='/constituency' element={<PrivateRoute />}>
+          <Route exact path='/' element={<PrivateRoute />}>
             <Route exact path="/constituency" element={<Constituency />} />
+          </Route>
+          <Route exact path='/' element={<PrivateRoute />}>
+            <Route exact path="/add-resolution" element={<AddResolution />} />
           </Route>
         </Routes>
       </Router>
