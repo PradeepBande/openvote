@@ -25,43 +25,29 @@ const Row = (props) => {
 
     const onClickEdit = (id) => {
         localStorage.setItem('candidate_id', id)
+        //   navigate('/crop-details')
+    }
+
+    const onClickDelete = (id) => {
+
     }
 
     return (
         <React.Fragment>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }} style={{ fontSize: 20 }}>
-                <TableCell>
+                {/* <TableCell>
                     <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
-                </TableCell>
-                <TableCell component="th" scope="row" align="center">
-                    <img src={process.env.REACT_APP_SERVER_URL + 'api/images/' + row?.candidate_image}
-                        alt={"Crop_Image"} width="100" height="100" />
-                </TableCell>
+                </TableCell> */}
                 <TableCell align="center">
                     <Typography style={{ fontSize: 20 }}>
-                        {row?.candidate_name}
+                        {row?.constituency}
                     </Typography>
-                </TableCell>
-                <TableCell align="center">
-                    <Grid style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <img src={process.env.REACT_APP_SERVER_URL + 'api/images/' + row?.party?.party_logo}
-                            alt={"party image"} width="40" height="40" />
-                        &nbsp;&nbsp;
-                        <Typography style={{ fontSize: 20 }}>
-                            {row?.party?.party_name}
-                        </Typography>
-                    </Grid>
                 </TableCell>
                 <TableCell align="center">
                     <Typography style={{ fontSize: 20 }}>
                         {row?.city}
-                    </Typography>
-                </TableCell>
-                <TableCell align="center">
-                    <Typography style={{ fontSize: 20 }}>
-                        {row?.district}
                     </Typography>
                 </TableCell>
                 <TableCell align="center">
@@ -76,12 +62,6 @@ const Row = (props) => {
                 </TableCell>
                 <TableCell align="center">
                     <Grid>
-                        {/* <Tooltip title="Generate QR Code">
-                     <IconButton aria-label="view row" size="small" onClick={() => onClickGenerateQRCode(row?.crop_id)}>
-                        <QrCodeIcon />
-                     </IconButton>
-                  </Tooltip> */}
-
                         <Tooltip title="Edit Crop">
                             <IconButton aria-label="edit row" size="small" onClick={() => onClickEdit(row?.crop_id)}>
                                 <EditIcon />
@@ -94,31 +74,6 @@ const Row = (props) => {
                             </IconButton>
                         </Tooltip>
                     </Grid>
-                </TableCell>
-            </TableRow>
-            <TableRow>
-                <TableCell></TableCell>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
-                        <Box sx={{ margin: '15px 5px' }} component={Paper}  >
-                            <Typography variant="h5" gutterBottom component="div"
-                                style={{ textAlign: 'center', textDecoration: 'underline', fontWeight: 'bold' }}
-                            >
-                                Candidate Info
-                            </Typography>
-                            {
-                                row?.candidate_info ?
-                                    <Typography style={{ padding: '10px 30px', fontSize: 20 }}>
-                                        {row?.candidate_info}
-                                    </Typography>
-                                    :
-                                    <Typography style={{ textAlign: 'center' }}>
-                                        No Info avaialble
-                                    </Typography>
-
-                            }
-                        </Box>
-                    </Collapse>
                 </TableCell>
             </TableRow>
         </React.Fragment>

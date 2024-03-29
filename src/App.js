@@ -17,6 +17,7 @@ import AddCandidate from './components/AddCandidate';
 import Parties from './components/Parties';
 import AddParty from './components/AddParty';
 import AddResolution from './components/AddResolution';
+import Resolutions from './components/Resolutions';
 
 const theme = createTheme();
 
@@ -49,6 +50,9 @@ export default function App() {
           </Route>
           <Route exact path='/' element={<PrivateRoute />}>
             <Route exact path="/add-resolution" element={<AddResolution />} />
+          </Route>
+          <Route exact path='/' element={<PrivateRoute />}>
+            <Route exact path="/resolutions" element={<Resolutions />} />
           </Route>
         </Routes>
       </Router>

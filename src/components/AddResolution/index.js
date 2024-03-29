@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { axiosGet, axiosPost } from '../../helpers/Axios';
-import { Button, Grid, InputLabel, MenuItem, OutlinedInput, Select, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, Grid, InputLabel, MenuItem, OutlinedInput, Select, TextField, Typography } from '@mui/material';
 import Header from '../Header';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { DropzoneArea } from "material-ui-dropzone";
@@ -13,10 +13,13 @@ const AddResolution = () => {
    const [selectedCandidates, setSelectedCandidates] = useState(['', '', ''])
    const [selectedCandidatesIds, setSelectedCandidatesIds] = useState(['', '', ''])
    const [candidates, setCandidates] = useState([])
+   const [constituencyList, setConstituencyList] = useState([])
    const [party, setParty] = useState('Select Party')
    const [city, setCity] = useState('')
    const [state, setState] = useState('')
    const [district, setDistrict] = useState('')
+   const [constituency, setConstituency] = useState(null)
+
 
    useEffect(() => {
       axiosGet('api/party/get')
@@ -45,7 +48,16 @@ const AddResolution = () => {
    }, [])
 
    useEffect(() => {
-
+      axiosGet('api/constituency/get')
+         .then((response) => {
+            const { constituency } = response
+            if (constituency)
+               setConstituencyList(constituency)
+            console.log("Response")
+         })
+         .catch((error) => {
+            console.log("Error --", error)
+         })
    }, [])
 
    const onChangeSelectCandidate = (id, index) => {
@@ -54,7 +66,6 @@ const AddResolution = () => {
       data[index] = candidate
       let ids = selectedCandidatesIds
       ids[index] = candidate?._id
-      console.log("Ids --", ids, data, candidate, index)
       setSelectedCandidates([...data])
       setSelectedCandidatesIds([...ids])
    }
@@ -83,15 +94,24 @@ const AddResolution = () => {
       let data = {
          resolution_name, resolution_info, resolution_image,
          candidates: selectedCandidatesIds, city, district,
-         state
+         state, constituency
       }
-      axiosPost('api/resolutions/add',data)
-      .then((response)=>{
-         console.log("Response --", response)
-      })
-      .catch((err)=>{
-         console.log("Error --", err)
-      })
+      console.log("Constituency --", constituency)
+      axiosPost('api/resolutions/add', data)
+         .then((response) => {
+            setResolutionName('')
+            setResolutionInfo('')
+            setResolutionImage([])
+            setSelectedCandidates(['', '', ''])
+            setSelectedCandidatesIds(['', '', ''])
+            setCity('')
+            setState('')
+            setDistrict('')
+            console.log("Response --", response)
+         })
+         .catch((err) => {
+            console.log("Error --", err)
+         })
    }
 
    return (
@@ -116,6 +136,64 @@ const AddResolution = () => {
                      value={resolution_name}
                      onChange={(e) => setResolutionName(e.target.value)}
                   />
+               </Grid>
+
+               <Grid container item xs={12} spacing={2} style={{ display: 'flex', alignItems: 'center' }}>
+                  <Grid item xs={12} md={6}>
+                     <Autocomplete
+                        id="country-select-demo"
+                        options={constituencyList}
+                        autoHighlight
+                        getOptionLabel={(option) => option.constituency}
+                        renderOption={(props, option) => (
+                           <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                              {option?.constituency + ' - ' + option?.state}
+                           </Box>
+                        )}
+                        renderInput={(params) => (
+                           <TextField
+                              {...params}
+                              label="Choose a constituency"
+                              inputProps={{
+                                 ...params.inputProps,
+                                 autoComplete: 'new-password', // disable autocomplete and autofill
+                              }}
+                           />
+                        )}
+                        onChange={(e, value) => setConstituency(value?._id)}
+                     />
+                  </Grid>
+                  <br />
+                  <Grid item xs={12} md={6}>
+                     <TextField margin="normal"
+                        required fullWidth
+                        id="city" label="City"
+                        name="city" autoFocus
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                     />
+                  </Grid>
+                  <br />
+                  <Grid item xs={12} md={6}>
+                     <TextField margin="normal"
+                        required fullWidth
+                        id="district" label="District"
+                        name="district" autoFocus
+                        value={district}
+                        onChange={(e) => setDistrict(e.target.value)}
+                     />
+                  </Grid>
+                  <br />
+                  <Grid item xs={12} md={6}>
+                     <TextField margin="normal"
+                        required fullWidth
+                        id="state" label="State"
+                        name="state" autoFocus
+                        value={state}
+                        onChange={(e) => setState(e.target.value)}
+                     />
+                  </Grid>
+                  <br />
                </Grid>
                <br />
                {
@@ -195,38 +273,7 @@ const AddResolution = () => {
                </Grid>
                <br />
 
-               <Grid container item xs={12} spacing={2}>
-                  <Grid item xs={12} md={6}>
-                     <TextField margin="normal"
-                        required fullWidth
-                        id="city" label="City"
-                        name="city" autoFocus
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
-                     />
-                  </Grid>
-                  <br />
-                  <Grid item xs={12} md={6}>
-                     <TextField margin="normal"
-                        required fullWidth
-                        id="district" label="District"
-                        name="district" autoFocus
-                        value={district}
-                        onChange={(e) => setDistrict(e.target.value)}
-                     />
-                  </Grid>
-                  <br />
-                  <Grid item xs={12} md={6}>
-                     <TextField margin="normal"
-                        required fullWidth
-                        id="state" label="State"
-                        name="state" autoFocus
-                        value={state}
-                        onChange={(e) => setState(e.target.value)}
-                     />
-                  </Grid>
-                  <br />
-               </Grid>
+
 
                {/* <br />
                <Grid item xs={12} md={12}>
@@ -265,7 +312,7 @@ const AddResolution = () => {
                </Grid> */}
                <br /><br />
                <Grid item xs={12} md={12} style={{ textAlign: 'center' }}>
-                  <Button style={{ padding:'15px 30px'}} color="success" variant="contained" onClick={onClickAddResolution}>
+                  <Button style={{ padding: '15px 30px' }} color="success" variant="contained" onClick={onClickAddResolution}>
                      Add Resolution
                   </Button>
                </Grid>

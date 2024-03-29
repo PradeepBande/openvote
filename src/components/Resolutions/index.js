@@ -5,17 +5,17 @@ import Header from '../Header';
 import Row from './Row';
 import { useNavigate } from 'react-router-dom';
 
-const Constituency = () => {
-   const [constituencyList, setConstituencyList] = useState([])
+const Resolutions = () => {
+   const [resolutionsList, setResolutionsList] = useState([])
    const navigate = useNavigate()
 
 
    useEffect(() => {
-      axiosGet('api/constituency/get')
+      axiosGet('api/resolutions/get')
          .then((response) => {
-            const { constituency } = response
-            if (constituency)
-               setConstituencyList(constituency)
+            const { resolutions } = response
+            if (resolutions)
+               setResolutionsList(resolutions)
             console.log("Response")
          })
          .catch((error) => {
@@ -48,16 +48,16 @@ const Constituency = () => {
                   <Table aria-label="collapsible table">
                      <TableHead>
                         <TableRow>
-                           {/* <TableCell /> */}
-                           <TableCell align="center" style={{ fontWeight: 'bold' }}>Constituency</TableCell>
+                           <TableCell />
+                           <TableCell align="center" style={{ fontWeight: 'bold' }}>Resolution</TableCell>
                            <TableCell align="center" style={{ fontWeight: 'bold' }}>City</TableCell>
                            <TableCell align="center" style={{ fontWeight: 'bold' }}>State</TableCell>
-                           <TableCell align="center" style={{ fontWeight: 'bold' }}>Union Terriotory</TableCell>
+                           <TableCell align="center" style={{ fontWeight: 'bold' }}>Created At</TableCell>
                            <TableCell align="center" style={{ fontWeight: 'bold' }}>Actions</TableCell>
                         </TableRow>
                      </TableHead>
                      <TableBody>
-                        {constituencyList && constituencyList.length > 0 && constituencyList.map((row) => (
+                        {resolutionsList && resolutionsList.length > 0 && resolutionsList.map((row) => (
                            <Row key={row._id} row={row} />
                         ))}
                      </TableBody>
@@ -70,4 +70,4 @@ const Constituency = () => {
    )
 }
 
-export default Constituency
+export default Resolutions
