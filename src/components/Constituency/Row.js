@@ -57,7 +57,7 @@ const Row = (props) => {
                 </TableCell>
                 <TableCell align="center">
                     <Typography style={{ fontSize: 20 }}>
-                        {moment(row?.created_at).format('hh:mm:ss a')}
+                        {moment(row?.created_at).format('DD-MM-YYYY')}
                     </Typography>
                 </TableCell>
                 <TableCell align="center">

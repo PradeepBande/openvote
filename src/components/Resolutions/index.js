@@ -37,8 +37,8 @@ const Resolutions = () => {
             </Grid>
             <br />
             <Grid item xs={12} md={10} style={{ display: 'flex', justifyContent: 'right', paddingRight: 20 }}>
-               <Button variant="contained" color="success" onClick={() => navigate('/add-candidate')}>
-                  Add Candidate
+               <Button variant="contained" color="success" onClick={() => navigate('/add-resolution')}>
+                  Add Resolution
                </Button>
             </Grid>
             <br />

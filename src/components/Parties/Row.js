@@ -45,7 +45,7 @@ const Row = (props) => {
                   alt={row?.party_name} width="100" height="100" />
             </TableCell>
             <TableCell align="center">{row?.party_name}</TableCell>
-            <TableCell align="center">{moment(row?.created_at).format('hh:mm:ss a')}</TableCell>
+            <TableCell align="center">{moment(row?.created_at).format('DD-MM-YYYY')}</TableCell>
             <TableCell align="center">
                <Grid>
                   {/* <Tooltip title="Generate QR Code">

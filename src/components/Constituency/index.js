@@ -35,12 +35,12 @@ const Constituency = () => {
             <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
                <h1>Constituency List</h1>
             </Grid>
-            <br />
+            {/* <br />
             <Grid item xs={12} md={10} style={{ display: 'flex', justifyContent: 'right', paddingRight: 20 }}>
-               {/* <Button variant="contained" color="success" onClick={() => navigate('/add-candidate')}>
+               <Button variant="contained" color="success" onClick={() => navigate('/add-candidate')}>
                   Add Candidate
-               </Button> */}
-            </Grid>
+               </Button>
+            </Grid> */}
             <br />
             <Grid item xs={12} md={10} style={{ padding: 10 }}>
 

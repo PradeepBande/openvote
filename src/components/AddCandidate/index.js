@@ -30,6 +30,13 @@ const AddCandidate = () => {
 
       axiosPost('api/candidates/add', formData)
          .then((res) => {
+            setCandidateName('')
+            setCandidateInfo('')
+            setCandidateImage([])
+            setParty('Select Party')
+            setCity('')
+            setState('')
+            setDistrict('')
             console.log("Response--", res)
          })
          .catch((error) => {
@@ -125,7 +132,7 @@ const AddCandidate = () => {
                </Grid>
                <br />
 
-               <Grid container item xs={12} spacing={2} style={{display:'flex', alignItems:'center'}}>
+               <Grid container item xs={12} spacing={2} style={{ display: 'flex', alignItems: 'center' }}>
                   <Grid item xs={12} md={6}>
                      <Autocomplete
                         id="country-select-demo"
