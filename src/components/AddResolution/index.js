@@ -13,11 +13,11 @@ const AddResolution = () => {
    const [selectedCandidates, setSelectedCandidates] = useState(['', '', ''])
    const [selectedCandidatesIds, setSelectedCandidatesIds] = useState(['', '', ''])
    const [candidates, setCandidates] = useState([])
-   const [constituencyList, setConstituencyList] = useState([])
    const [party, setParty] = useState('Select Party')
    const [city, setCity] = useState('')
    const [state, setState] = useState('')
    const [district, setDistrict] = useState('')
+   const [constituencyList, setConstituencyList] = useState([])
    const [constituency, setConstituency] = useState(null)
 
 

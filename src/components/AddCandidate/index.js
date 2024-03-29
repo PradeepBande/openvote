@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { axiosGet, axiosPost } from '../../helpers/Axios';
-import { Button, Grid, InputLabel, MenuItem, OutlinedInput, Select, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, Grid, InputLabel, MenuItem, OutlinedInput, Select, TextField, Typography } from '@mui/material';
 import Header from '../Header';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { DropzoneArea } from "material-ui-dropzone";
@@ -14,12 +14,15 @@ const AddCandidate = () => {
    const [city, setCity] = useState('')
    const [state, setState] = useState('')
    const [district, setDistrict] = useState('')
+   const [constituencyList, setConstituencyList] = useState([])
+   const [constituency, setConstituency] = useState(null)
 
    const onClickAdd = () => {
       let formData = new FormData()
       formData.append('candidate_name', candidate_name)
       formData.append('candidate_info', candidate_info)
       formData.append('candidate_image', candidate_image[0])
+      formData.append('constituency', constituency)
       formData.append('party', party)
       formData.append('city', city)
       formData.append('district', district)
@@ -40,6 +43,19 @@ const AddCandidate = () => {
             const { parties } = response
             if (parties)
                setParties(parties)
+            console.log("Response")
+         })
+         .catch((error) => {
+            console.log("Error --", error)
+         })
+   }, [])
+
+   useEffect(() => {
+      axiosGet('api/constituency/get')
+         .then((response) => {
+            const { constituency } = response
+            if (constituency)
+               setConstituencyList(constituency)
             console.log("Response")
          })
          .catch((error) => {
@@ -109,7 +125,32 @@ const AddCandidate = () => {
                </Grid>
                <br />
 
-               <Grid container item xs={12} spacing={2}>
+               <Grid container item xs={12} spacing={2} style={{display:'flex', alignItems:'center'}}>
+                  <Grid item xs={12} md={6}>
+                     <Autocomplete
+                        id="country-select-demo"
+                        options={constituencyList}
+                        autoHighlight
+                        getOptionLabel={(option) => option.constituency}
+                        renderOption={(props, option) => (
+                           <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                              {option?.constituency + ' - ' + option?.state}
+                           </Box>
+                        )}
+                        renderInput={(params) => (
+                           <TextField
+                              {...params}
+                              label="Choose a constituency"
+                              inputProps={{
+                                 ...params.inputProps,
+                                 autoComplete: 'new-password', // disable autocomplete and autofill
+                              }}
+                           />
+                        )}
+                        onChange={(e, value) => setConstituency(value?._id)}
+                     />
+                  </Grid>
+                  <br />
                   <Grid item xs={12} md={6}>
                      <TextField margin="normal"
                         required fullWidth
