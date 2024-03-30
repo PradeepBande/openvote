@@ -5,7 +5,6 @@ import Header from '../Header';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const VoteCast = () => {
-   const [candidateList, setCandidateList] = useState([])
    const [searchParams, setSearchParams] = useSearchParams();
    const resolution_id = searchParams.get("id");
    const [resolution, setResolution] = useState(null)
@@ -57,10 +56,12 @@ const VoteCast = () => {
             location
          })
             .then((res) => {
-               resolutions.push(resolution?._id)
-               localStorage.setItem('resolutions', JSON.stringify(resolutions))
-               console.log("Response --", res)
-               alert("Successful voting")
+               if (res.status == 200) {
+                  resolutions.push(resolution?._id)
+                  localStorage.setItem('resolutions', JSON.stringify(resolutions))
+                  console.log("Response --", res)
+                  alert("Successful voting")
+               }
             })
             .catch((err) => {
                console.log("Error --", err)
