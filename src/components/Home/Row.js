@@ -22,14 +22,9 @@ const Row = (props) => {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
     const navigate = useNavigate()
-    console.log("Row --", row)
-    const onClickEdit = (id) => {
-        localStorage.setItem('candidate_id', id)
-        //   navigate('/crop-details')
-    }
 
-    const onClickDelete = (id) => {
-
+    const onClickCastVote = () => {
+        navigate(`/vote?id=${row._id}&constituency=${row?.constituency?.constituency}&state=${row?.constituency?.state}`)
     }
 
     return (
@@ -67,7 +62,11 @@ const Row = (props) => {
                 </TableCell>
                 <TableCell align="center">
                     <Grid>
-                        <Button variant="contained" color="primary">
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={onClickCastVote}
+                        >
                             Cast Vote
                         </Button>
                         {/* <Tooltip title="Edit Crop">

@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import { Navigate } from 'react-router-dom';
-const SERVER_API_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:4001/';
+// const SERVER_API_URL = process.env.REACT_APP_SERVER_URL || 'http://192.168.1.6:4001/';
+const SERVER_API_URL = 'http://192.168.1.6:4001/';
 
 export function axiosGet(url, params = {}) {
   return new Promise(async (resolve, reject) => {
@@ -12,7 +13,6 @@ export function axiosGet(url, params = {}) {
 
     await Axios.get(SERVER_API_URL + url, config)
       .then((res) => {
-        console.log("REs --", res?.data)
         resolve(res.data);
       })
       .catch((err) => {

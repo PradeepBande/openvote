@@ -15,7 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
 const pages = ['Home', 'Parties', 'Candidates', 'Constituency', 'Resolutions'];
-const pagesLink = ['/home', '/parties', '/candidates', '/constituency','/resolutions']
+const pagesLink = ['/home', '/parties', '/candidates', '/constituency', '/resolutions']
 const settings = ['Profile', 'Logout'];
 
 function Header() {
