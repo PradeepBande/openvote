@@ -42,17 +42,31 @@ const VoteCast = () => {
    }, [resolution_id])
 
    const handleOnClickCasteVote = () => {
-      axiosPost('api/votes/vote', {
-         resolution, candidate,
-         constituency: resolution?.constituency?._id,
-         location
-      })
-         .then((res) => {
-            console.log("Response --", res)
+      let resolutions = localStorage.getItem('resolutions')
+      if (!resolutions)
+         resolutions = []
+      else {
+         resolutions = JSON.parse(resolutions)
+      }
+      if (resolutions.includes(resolution._id)) {
+         alert('Your vote has been already cast')
+      } else {
+         axiosPost('api/votes/vote', {
+            resolution, candidate,
+            constituency: resolution?.constituency?._id,
+            location
          })
-         .catch((err) => {
-            console.log("Error --", err)
-         })
+            .then((res) => {
+               resolutions.push(resolution?._id)
+               localStorage.setItem('resolutions', JSON.stringify(resolutions))
+               console.log("Response --", res)
+               alert("Successful voting")
+            })
+            .catch((err) => {
+               console.log("Error --", err)
+            })
+      }
+
    }
 
    return (
