@@ -22,6 +22,7 @@ import AddParty from './components/AddParty';
 import AddResolution from './components/AddResolution';
 import Resolutions from './components/Resolutions';
 import Home from './components/Home';
+import VoteCast from './components/VoteCast';
 
 const theme = createTheme();
 
@@ -33,6 +34,9 @@ export default function App() {
         <Routes>
           <Route exact path='/' element={<PublicRoute />}>
             <Route exact path="/" element={<Home />} />
+          </Route>
+          <Route exact path='/' element={<PublicRoute />}>
+            <Route exact path="/vote" element={<VoteCast />} />
           </Route>
           <Route exact path='/' element={<PublicRoute />}>
             <Route exact path="/admin/login" element={<Login />} />

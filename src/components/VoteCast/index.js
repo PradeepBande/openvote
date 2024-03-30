@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const VoteCast = () => {
    const [candidateList, setCandidateList] = useState([])
    const navigate = useNavigate()
-
+   
    useEffect(() => {
       axiosGet('api/candidates/get')
          .then((response) => {
