@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Card, CardActions, CardContent, CardMedia, Grid, Paper, Tooltip } from '@mui/material';
+import { Grid, Paper, Tooltip } from '@mui/material';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -22,14 +22,9 @@ const Row = (props) => {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
     const navigate = useNavigate()
-    console.log("Row --", row)
+
     const onClickEdit = (id) => {
         localStorage.setItem('candidate_id', id)
-        //   navigate('/crop-details')
-    }
-
-    const onClickDelete = (id) => {
-
     }
 
     return (
@@ -40,14 +35,38 @@ const Row = (props) => {
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                 </TableCell>
+                <TableCell component="th" scope="row" align="center">
+                    <img src={process.env.REACT_APP_SERVER_URL + 'api/images/' + row?.candidate_image}
+                        alt={"Crop_Image"} width="100" height="100" />
+                </TableCell>
                 <TableCell align="center">
                     <Typography style={{ fontSize: 20 }}>
-                        {row?.resolution_name}
+                        {row?.candidate_name}
+                    </Typography>
+                </TableCell>
+                <TableCell align="center">
+                    <Grid style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <img src={process.env.REACT_APP_SERVER_URL + 'api/images/' + row?.party?.party_logo}
+                            alt={"party image"} width="40" height="40" />
+                        &nbsp;&nbsp;
+                        <Typography style={{ fontSize: 20 }}>
+                            {row?.party?.party_name}
+                        </Typography>
+                    </Grid>
+                </TableCell>
+                <TableCell align="center">
+                    <Typography style={{ fontSize: 20 }}>
+                        {row?.constituency?.constituency}
                     </Typography>
                 </TableCell>
                 <TableCell align="center">
                     <Typography style={{ fontSize: 20 }}>
                         {row?.city}
+                    </Typography>
+                </TableCell>
+                <TableCell align="center">
+                    <Typography style={{ fontSize: 20 }}>
+                        {row?.district}
                     </Typography>
                 </TableCell>
                 <TableCell align="center">
@@ -62,6 +81,12 @@ const Row = (props) => {
                 </TableCell>
                 <TableCell align="center">
                     <Grid>
+                        {/* <Tooltip title="Generate QR Code">
+                     <IconButton aria-label="view row" size="small" onClick={() => onClickGenerateQRCode(row?.crop_id)}>
+                        <QrCodeIcon />
+                     </IconButton>
+                  </Tooltip> */}
+
                         <Tooltip title="Edit Crop">
                             <IconButton aria-label="edit row" size="small" onClick={() => onClickEdit(row?.crop_id)}>
                                 <EditIcon />
@@ -77,41 +102,27 @@ const Row = (props) => {
                 </TableCell>
             </TableRow>
             <TableRow>
+                <TableCell></TableCell>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                    <Collapse in={open} timeout="auto" unmountOnExit style={{ padding: 20 }}>
-                        <Grid container spacing={2} sx={{ margin: '15px 5px' }}>
+                    <Collapse in={open} timeout="auto" unmountOnExit>
+                        <Box sx={{ margin: '15px 5px' }} component={Paper}  >
+                            <Typography variant="h5" gutterBottom component="div"
+                                style={{ textAlign: 'center', textDecoration: 'underline', fontWeight: 'bold' }}
+                            >
+                                Candidate Info
+                            </Typography>
                             {
-                                row?.candidates.map((c, index) =>
-                                    <Grid item xs={12} md={3}>
-                                        <Card>
-                                            <CardMedia
-                                                sx={{ height: 130, width: 100, margin: 'auto', margintop: 10 }}
-                                                image={process.env.REACT_APP_SERVER_URL + 'api/images/' + c?.candidate_image}
-                                                title="green iguana"
-                                            />
-                                            <CardContent>
-                                                <Typography gutterBottom variant="h6" component="div" style={{ textAlign: 'center' }}>
-                                                    {c.candidate_name}
-                                                </Typography>
-                                                <Grid style={{ display: 'flex', alignItems: 'center', justifyContent:'center' }}>
-                                                    <img src={process.env.REACT_APP_SERVER_URL + 'api/images/' + c?.party?.party_logo}
-                                                        alt={"party image"} width="30" height="30" />
-                                                    &nbsp;&nbsp;
-                                                    <Typography style={{ fontSize: 20 }}>
-                                                        {c?.party?.party_name}
-                                                    </Typography>
-                                                </Grid>
-                                                <br />
-                                                <Typography variant="body2" color="text.secondary" style={{ textAlign: 'center' }}>
-                                                    {c.candidate_info}
-                                                </Typography>
-                                            </CardContent>
-                                        </Card>
-                                    </Grid>
-                                )
-                            }
+                                row?.candidate_info ?
+                                    <Typography style={{ padding: '10px 30px', fontSize: 20 }}>
+                                        {row?.candidate_info}
+                                    </Typography>
+                                    :
+                                    <Typography style={{ textAlign: 'center' }}>
+                                        No Info avaialble
+                                    </Typography>
 
-                        </Grid>
+                            }
+                        </Box>
                     </Collapse>
                 </TableCell>
             </TableRow>

@@ -21,7 +21,7 @@ export default function LogIn(props) {
                const { token, admin } = res
                localStorage.setItem('token', token)
                localStorage.setItem('admin', JSON.stringify(admin))
-               navigate('/home')
+               navigate('/dashboard')
             }
          })
          .catch((err) => {

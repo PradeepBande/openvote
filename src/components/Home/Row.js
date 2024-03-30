@@ -47,12 +47,17 @@ const Row = (props) => {
                 </TableCell>
                 <TableCell align="center">
                     <Typography style={{ fontSize: 20 }}>
-                        {row?.city}
+                        {row?.constituency?.constituency}
                     </Typography>
                 </TableCell>
                 <TableCell align="center">
                     <Typography style={{ fontSize: 20 }}>
-                        {row?.state}
+                        {row?.constituency?.state}
+                    </Typography>
+                </TableCell>
+                <TableCell align="center">
+                    <Typography style={{ fontSize: 20 }}>
+                        {row?.constituency?.union_territory == 0 ? 'No' : 'Yes'}
                     </Typography>
                 </TableCell>
                 <TableCell align="center">
@@ -62,7 +67,10 @@ const Row = (props) => {
                 </TableCell>
                 <TableCell align="center">
                     <Grid>
-                        <Tooltip title="Edit Crop">
+                        <Button variant="contained" color="primary">
+                            Cast Vote
+                        </Button>
+                        {/* <Tooltip title="Edit Crop">
                             <IconButton aria-label="edit row" size="small" onClick={() => onClickEdit(row?.crop_id)}>
                                 <EditIcon />
                             </IconButton>
@@ -72,7 +80,7 @@ const Row = (props) => {
                             <IconButton aria-label="delete row" size="small" onClick={() => onClickEdit(row?.crop_id)}>
                                 <DeleteIcon />
                             </IconButton>
-                        </Tooltip>
+                        </Tooltip> */}
                     </Grid>
                 </TableCell>
             </TableRow>
@@ -93,7 +101,7 @@ const Row = (props) => {
                                                 <Typography gutterBottom variant="h6" component="div" style={{ textAlign: 'center' }}>
                                                     {c.candidate_name}
                                                 </Typography>
-                                                <Grid style={{ display: 'flex', alignItems: 'center', justifyContent:'center' }}>
+                                                <Grid style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                                     <img src={process.env.REACT_APP_SERVER_URL + 'api/images/' + c?.party?.party_logo}
                                                         alt={"party image"} width="30" height="30" />
                                                     &nbsp;&nbsp;

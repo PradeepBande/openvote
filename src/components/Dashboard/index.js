@@ -5,17 +5,17 @@ import Header from '../Header';
 import Row from './Row';
 import { useNavigate } from 'react-router-dom';
 
-const Resolutions = () => {
-   const [resolutionsList, setResolutionsList] = useState([])
+const Dashboard = () => {
+   const [candidateList, setCandidateList] = useState([])
    const navigate = useNavigate()
 
 
    useEffect(() => {
-      axiosGet('api/resolutions/get')
+      axiosGet('api/candidates/get')
          .then((response) => {
-            const { resolutions } = response
-            if (resolutions)
-               setResolutionsList(resolutions)
+            const { candidates } = response
+            if (candidates)
+               setCandidateList(candidates)
             console.log("Response")
          })
          .catch((error) => {
@@ -33,14 +33,14 @@ const Resolutions = () => {
             }}
          >
             <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
-               <h1>Recent Election Polls</h1>
+               <h1>Candidates List</h1>
             </Grid>
-            {/* <br />
+            <br />
             <Grid item xs={12} md={10} style={{ display: 'flex', justifyContent: 'right', paddingRight: 20 }}>
-               <Button variant="contained" color="success" onClick={() => navigate('/add-resolution')}>
-                  Add Resolution
+               <Button variant="contained" color="success" onClick={() => navigate('/add-candidate')}>
+                  Add Candidate
                </Button>
-            </Grid> */}
+            </Grid>
             <br />
             <Grid item xs={12} md={10} style={{ padding: 10 }}>
 
@@ -49,16 +49,19 @@ const Resolutions = () => {
                      <TableHead>
                         <TableRow>
                            <TableCell />
-                           <TableCell align="center" style={{ fontWeight: 'bold', fontSize: 20 }}>Resolution</TableCell>
-                           <TableCell align="center" style={{ fontWeight: 'bold', fontSize: 20 }}>Constituency</TableCell>
-                           <TableCell align="center" style={{ fontWeight: 'bold', fontSize: 20 }}>State</TableCell>
-                           <TableCell align="center" style={{ fontWeight: 'bold', fontSize: 20 }}>Union Terriotory</TableCell>
-                           <TableCell align="center" style={{ fontWeight: 'bold', fontSize: 20 }}>Created At</TableCell>
-                           <TableCell align="center" style={{ fontWeight: 'bold', fontSize: 20 }}>Vote</TableCell>
+                           <TableCell align="center" style={{ fontWeight: 'bold' }}>Candidate Image</TableCell>
+                           <TableCell align="center" style={{ fontWeight: 'bold' }}>Candidate Name</TableCell>
+                           <TableCell align="center" style={{ fontWeight: 'bold' }}>Party Name</TableCell>
+                           <TableCell align="center" style={{ fontWeight: 'bold' }}>Constituency</TableCell>
+                           <TableCell align="center" style={{ fontWeight: 'bold' }}>City</TableCell>
+                           <TableCell align="center" style={{ fontWeight: 'bold' }}>District</TableCell>
+                           <TableCell align="center" style={{ fontWeight: 'bold' }}>State</TableCell>
+                           <TableCell align="center" style={{ fontWeight: 'bold' }}>Created Date</TableCell>
+                           <TableCell align="center" style={{ fontWeight: 'bold' }}>Actions</TableCell>
                         </TableRow>
                      </TableHead>
                      <TableBody>
-                        {resolutionsList && resolutionsList.length > 0 && resolutionsList.map((row) => (
+                        {candidateList && candidateList.length > 0 && candidateList.map((row) => (
                            <Row key={row._id} row={row} />
                         ))}
                      </TableBody>
@@ -71,4 +74,4 @@ const Resolutions = () => {
    )
 }
 
-export default Resolutions
+export default Dashboard

@@ -9,15 +9,19 @@ import PrivateRoute from './components/PrivateRoute';
 import Login from './components/SignIn';
 import Footer from './components/Footer';
 import PublicRoute from './components/PublicRoute';
-import Home from './components/Home';
+import Dashboard from './components/Dashboard';
+
 import Constituency from './components/Constituency';
-import Party from './components/AddParty';
+
 import Candidates from './components/Candidates';
 import AddCandidate from './components/AddCandidate';
+
 import Parties from './components/Parties';
 import AddParty from './components/AddParty';
+
 import AddResolution from './components/AddResolution';
 import Resolutions from './components/Resolutions';
+import Home from './components/Home';
 
 const theme = createTheme();
 
@@ -28,10 +32,13 @@ export default function App() {
       <Router>
         <Routes>
           <Route exact path='/' element={<PublicRoute />}>
+            <Route exact path="/" element={<Home />} />
+          </Route>
+          <Route exact path='/' element={<PublicRoute />}>
             <Route exact path="/admin/login" element={<Login />} />
           </Route>
           <Route exact path='/' element={<PrivateRoute />}>
-            <Route exact path="/home" element={<Home />} />
+            <Route exact path="/dashboard" element={<Dashboard />} />
           </Route>
           <Route exact path='/candidates' element={<PrivateRoute />}>
             <Route exact path="/candidates" element={<Candidates />} />
