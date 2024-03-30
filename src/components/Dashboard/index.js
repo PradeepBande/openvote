@@ -9,7 +9,6 @@ const Dashboard = () => {
    const [candidateList, setCandidateList] = useState([])
    const navigate = useNavigate()
 
-
    useEffect(() => {
       axiosGet('api/candidates/get')
          .then((response) => {
